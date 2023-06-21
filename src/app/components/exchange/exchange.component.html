@@ -1,0 +1,31 @@
+<div class="exchange">
+  <div class="exchange_top">
+<input class="exchange_input"
+       type="number"
+       placeholder="0"
+       [ngModel]="primaryVal"
+       (input)="setPrimaryVal($event)" />
+<select
+  class="exchange_input"
+  [ngModel]="primaryCur"
+  (input)="setPrimaryCur($event)"
+>
+  <option *ngFor="let currency of currencies | keyvalue" [value]="currency.key">{{currency.key}}</option>
+</select>
+  </div>
+
+    <div class="exchange_top">
+<input class="exchange_input"
+       type="number"
+       placeholder="0"
+       [ngModel]="secondaryVal"
+       (input)="setSecondaryVal($event)" />
+<select
+  class="exchange_input"
+  [ngModel]="secondaryCur"
+  (input)="setSecondaryCur($event)"
+>
+  <option *ngFor="let currency of currencies | keyvalue" [value]="currency.key">{{currency.key}}</option>
+</select>
+  </div>
+</div>

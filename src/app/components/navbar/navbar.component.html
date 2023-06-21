@@ -1,0 +1,22 @@
+<!--<div *ngFor="let currency of currencies | keyvalue">-->
+<!--  <div>{{currency.key}} | {{(1 / Number(currency.value)).toFixed(2)}}</div>-->
+<!--</div>-->
+
+<div class="navbar">
+  <div class="container">
+    <div class="logo">
+      <div class="logo_icon">
+<!--        <Image src={logo} alt={"logo"} width={40} height={40} />-->
+      </div>
+      <div class="logo_text">Monet change</div>
+    </div>
+
+    <div class="rates">
+      <ng-container *ngFor="let currency of currencies | keyvalue">
+      <div *ngIf="Number(currency.value) !== 1" class="rate">
+        {{currency.key}} {{(1 / Number(currency.value)).toFixed(2)}}
+      </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

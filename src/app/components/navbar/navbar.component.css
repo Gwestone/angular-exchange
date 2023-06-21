@@ -1,0 +1,64 @@
+.navbar{
+  background: #CDFFD2;
+  color: #02231c;
+  height: 80px;
+}
+
+.container{
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo{
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.logo_icon{
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.logo_text{
+  display: inline-block;
+  font-family: 'EB Garamond', serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+
+  margin-left: 10px;
+
+  color: #000000;
+}
+
+.rates{
+  display: flex;
+  align-items: center;
+}
+
+.rate{
+  display: inline-block;
+  margin: 0 10px;
+
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'EB Garamond', serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 42px;
+  /* identical to box height */
+
+  /*display: flex;*/
+  /*align-items: center;*/
+
+  color: #000000;
+}

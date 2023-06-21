@@ -8,8 +8,7 @@ import {Config} from "../../types";
 })
 export class ConfigService {
 
-  // @ts-ignore
-  currenciesList$: Observable<Config>;
+  currenciesList$: Observable<Config> | undefined;
 
   constructor(private http: HttpClient) {}
 

@@ -9,8 +9,7 @@ import {ConfigService} from "./config.service";
 })
 export class FetchService {
 
-  // @ts-ignore
-  private requestCache$: Observable<Currency>;
+  private requestCache$: Observable<Currency> | undefined;
 
   constructor(private http: HttpClient, private config: ConfigService) {}
 

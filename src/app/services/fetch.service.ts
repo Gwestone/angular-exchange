@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Data} from "../../types";
-import {map, Observable, switchMap} from "rxjs";
+import {map, Observable, shareReplay, switchMap} from "rxjs";
 import {ConfigService} from "./config.service";
 
 @Injectable({
@@ -9,41 +9,31 @@ import {ConfigService} from "./config.service";
 })
 export class FetchService {
 
-  constructor(private http: HttpClient, private config: ConfigService) {
-    // fetch(
-    //   this.serviceURL,
-    //   {}
-    // )
-    //   .then((response) => response.json())
-    //   .then((rawResponseData) => {
-    //     return Object.keys(rawResponseData.data).reduce<Data>((acc, key) => {
-    //       acc[key] = rawResponseData.data[key].value;
-    //       return acc;
-    //     }, {});
-    //   })
-    //   .then((parsedData) => {
-    //     this.currencies = parsedData;
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
-  }
+  // @ts-ignore
+  private requestCache$: Observable<Data>;
+
+  constructor(private http: HttpClient, private config: ConfigService) {}
 
   public makeRequest(): Observable<Data>{
 
     return this.config.getConfigCurrencies().pipe(
 
       switchMap((currencies)=>{
-        return this.http.get<any>(this.config.generateURL(currencies)).pipe(
+        if (!this.requestCache$){
+          this.requestCache$ = this.http.get<any>(this.config.generateURL(currencies)).pipe(
 
-          map((rawResponseData) => {
-            return Object.keys(rawResponseData.data).reduce<Data>((acc, key) => {
-              acc[key] = rawResponseData.data[key].value;
-              return acc;
-            }, {});
-          })
+            map((rawResponseData) => {
+              return Object.keys(rawResponseData.data).reduce<Data>((acc, key) => {
+                acc[key] = rawResponseData.data[key].value;
+                return acc;
+              }, {});
+            }),
+            shareReplay(1)
 
-        );
+          );
+        }
+
+        return this.requestCache$;
 
       })
     )

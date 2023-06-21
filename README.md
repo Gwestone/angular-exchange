@@ -1,4 +1,8 @@
-# Exchange
+# this project is a test task for itop1000 job application
+
+# To configure project use `config.json` file in `src/assets` folder
+
+## Exchange
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
 

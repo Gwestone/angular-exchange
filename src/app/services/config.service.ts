@@ -11,7 +11,7 @@ export class ConfigService {
   currenciesList: Observable<Config>;
 
   constructor(private http: HttpClient) {
-    this.currenciesList = http.get<Config>('assets/currencies.json');
+    this.currenciesList = http.get<Config>('assets/config.json');
   }
 
   getConfig(): Observable<Config>{

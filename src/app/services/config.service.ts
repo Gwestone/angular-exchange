@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, shareReplay} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Config} from "../../types";
 
@@ -8,14 +8,18 @@ import {Config} from "../../types";
 })
 export class ConfigService {
 
-  currenciesList: Observable<Config>;
+  // @ts-ignore
+  currenciesList$: Observable<Config>;
 
-  constructor(private http: HttpClient) {
-    this.currenciesList = http.get<Config>('assets/config.json');
-  }
+  constructor(private http: HttpClient) {}
 
   getConfig(): Observable<Config>{
-    return this.currenciesList;
+    if (!this.currenciesList$){
+      this.currenciesList$ = this.http.get<Config>('assets/config.json').pipe(
+        shareReplay(1)
+      );
+    }
+    return this.currenciesList$;
   }
 
   generateURL(config: Config): string {

@@ -1,1 +1,5 @@
-["UAH", "USD", "EUR", "PLN", "CZK"]
+{
+  "baseCurrency": "UAH",
+  "currencies": ["UAH", "USD", "EUR", "PLN", "CZK", "CAD"],
+  "apiKey": "nolkmojr4LTqNd6X0a4EFuvFPeyaAna3fqMLAZdf"
+}

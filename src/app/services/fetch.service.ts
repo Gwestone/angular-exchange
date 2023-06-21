@@ -16,11 +16,11 @@ export class FetchService {
 
   public makeRequest(): Observable<Currency>{
 
-    return this.config.getCurrenciesList().pipe(
+    return this.config.getConfig().pipe(
 
-      switchMap((currenciesList)=>{
+      switchMap((config)=>{
         if (!this.requestCache$){
-          this.requestCache$ = this.http.get<any>(this.config.generateURL(currenciesList)).pipe(
+          this.requestCache$ = this.http.get<any>(this.config.generateURL(config)).pipe(
 
             map((rawResponseData) => {
               return Object.keys(rawResponseData.data).reduce<Currency>((parsedResp, key) => {

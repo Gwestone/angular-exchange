@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FetchService} from "../../services/fetch.service";
-import {Data} from "../../../types";
+import {Currency} from "../../../types";
 
 @Component({
   selector: 'app-navbar',
@@ -9,10 +9,9 @@ import {Data} from "../../../types";
 })
 export class NavbarComponent implements OnInit{
 
-  currencies: Data = {};
+  currencies: Currency = {};
 
-  constructor(private fetchService: FetchService) {
-  }
+  constructor(private fetchService: FetchService) {}
 
   ngOnInit() {
     this.fetchService.makeRequest().subscribe((data)=>{

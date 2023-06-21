@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FetchService} from "../../services/fetch.service";
-import {Data} from "../../../types";
+import {Currency} from "../../../types";
 
 @Component({
   selector: 'app-exchange',
@@ -9,27 +9,26 @@ import {Data} from "../../../types";
 })
 export class ExchangeComponent implements OnInit{
 
-  rates: { EUR: number, USD: number, PLN: number, CZK: number, UAH: number } = {EUR: 1, USD: 1, PLN: 1, CZK: 1, UAH: 1};
+  rates: {[key: string]: number} = {};
 
-  currencies: Data = {};
-  @Input() primaryVal: number = 0;
-  @Input() primaryCur: string = "";
+  currencies: Currency = {};
+  primaryVal: number = 0;
+  primaryCur: string = "";
 
-  @Input() secondaryVal: number = 0;
-  @Input() secondaryCur: string = "";
+  secondaryVal: number = 0;
+  secondaryCur: string = "";
   constructor(private fetchService: FetchService) {}
 
   ngOnInit() {
     this.fetchService.makeRequest().subscribe((data)=>{
       this.currencies = data;
 
-      let EUR = 1 / (Number(data['EUR']) ?? 1);
-      let USD = 1 / (Number(data['USD']) ?? 1);
-      let PLN = 1 / (Number(data['PLN']) ?? 1);
-      let CZK = 1 / (Number(data['CZK']) ?? 1);
-      let UAH = 1;
+      for (const i in data) {
+        this.rates[i] = 1 / (Number(data[i]) ?? 1);
+      }
 
-      this.rates = { EUR: EUR, USD: USD, PLN: PLN, CZK: CZK, UAH: UAH };
+      this.primaryCur = Object.keys(data)[0];
+      this.secondaryCur = Object.keys(data)[0];
 
     })
   }
@@ -37,8 +36,6 @@ export class ExchangeComponent implements OnInit{
   setPrimaryVal(val: Event){
     this.primaryVal = Number((val.target as HTMLInputElement).value);
 
-    // get total amount of entered money in UAH
-    // @ts-ignore
     const total = this.primaryVal / (1 / Number(this.rates[this.primaryCur]));
     // translate money into second input
     // @ts-ignore
@@ -49,8 +46,6 @@ export class ExchangeComponent implements OnInit{
   setPrimaryCur(val: Event){
     this.primaryCur = (val.target as HTMLInputElement).value;
 
-    // get total amount of entered money in UAH
-    // @ts-ignore
     const total = this.primaryVal / (1 / Number(this.rates[this.primaryCur]));
     // translate money into second input
     // @ts-ignore
@@ -61,8 +56,6 @@ export class ExchangeComponent implements OnInit{
   setSecondaryVal(val: Event){
     this.secondaryVal = Number((val.target as HTMLInputElement).value);
 
-    // get total amount of entered money in UAH
-    // @ts-ignore
     const total = this.secondaryVal / (1 / Number(this.rates[this.secondaryCur]));
     // translate money into second input
     // @ts-ignore
@@ -73,8 +66,6 @@ export class ExchangeComponent implements OnInit{
   setSecondaryCur(val: Event){
     this.secondaryCur = (val.target as HTMLInputElement).value;
 
-    // get total amount of entered money in UAH
-    // @ts-ignore
     const total = this.secondaryVal / (1 / Number(this.rates[this.secondaryCur]));
     // translate money into second input
     // @ts-ignore

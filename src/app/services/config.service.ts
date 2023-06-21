@@ -7,14 +7,14 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ConfigService {
 
-  configCurrencies: Observable<string[]>;
+  currenciesList: Observable<string[]>;
 
   constructor(private http: HttpClient) {
-    this.configCurrencies = http.get<string[]>('assets/currencies.json');
+    this.currenciesList = http.get<string[]>('assets/currencies.json');
   }
 
-  getConfigCurrencies(): Observable<string[]>{
-    return this.configCurrencies;
+  getCurrenciesList(): Observable<string[]>{
+    return this.currenciesList;
   }
 
   generateURL(currencies: string[]): string {
